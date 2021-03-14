@@ -1,9 +1,16 @@
 def start
-
+    create_admin
 end
 
 def create_admin
-    user = User.new(first_name: "Joma", last_name: "Pormentilla", email: "jomapormentilla@gmail.com", password: "test")
+    data = {
+        first_name: "Joma",
+        last_name: "Pormentilla",
+        email: "jomapormentilla@gmail.com",
+        password: ENV['ADMIN_PASSWORD']
+    }
+    
+    User.create(data)
 end
 
 start

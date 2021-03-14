@@ -28,8 +28,8 @@ gem 'rack-cors'
 # Faker Gem
 gem 'faker'
 
-# DotEnv
-gem 'dotenv'
+# Dotenv-Rails
+gem 'dotenv-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
