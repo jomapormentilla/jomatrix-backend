@@ -6,7 +6,7 @@ class AuthController < ApplicationController
 
         if user && user.authenticate(user_login_params[:password])
             token = encode_token({ user_id: user.id })
-            render json: { data: UserSerializer.new(user), jwt: token }, status: :accepted
+            render json: { data: user.as_json(:except => [:password_digest]), jwt: token }, status: :accepted
         else
             render json: { error: 'Invalid Credentials.' }, status: :unauthorized
         end
