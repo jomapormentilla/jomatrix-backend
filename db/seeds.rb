@@ -38,7 +38,7 @@ def create_posts
     10.times do
         data = {
             title: Faker::Book.title,
-            content: Faker::LoremPixel.image,
+            content: "https://picsum.photos/450",
             user_id: User.all.sample.id
         }
 
