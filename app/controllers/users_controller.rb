@@ -14,6 +14,8 @@ class UsersController < ApplicationController
         user = User.create(user_params)
 
         if user.valid?
+            user.update(username: user_params[:email].split("@")[0])
+            
             token = encode_token(user_id: user.id)
             render json: { user: UserSerializer.new(user), jwt: token }, status: :created
         else
@@ -24,6 +26,11 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:first_name, :last_name, :email, :password)
+        params.require(:user).permit(
+            :first_name,
+            :last_name,
+            :email,
+            :password
+        )
     end
 end

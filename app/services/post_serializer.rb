@@ -6,8 +6,8 @@ class PostSerializer
     def to_serialized_json
         @post.to_json(
             :include => [
-                :comments => {only: [:id]},
-                :likes => {only: [:id]},
+                :comments,
+                :likes,
             ],
             :except => [
                 
