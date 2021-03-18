@@ -11,6 +11,19 @@ class LikesController < ApplicationController
         end
     end
 
+    def destroy
+        like = Like.all.find_by(id: params[:id].to_i)
+
+        if !!like
+            post = Post.find_by(id: like.likeable_id)
+            like.delete
+
+            render json: PostSerializer.new(post).to_serialized_json
+        else
+            render json: { error: 'Something went wrong!' }
+        end 
+    end
+
     private
 
     def like_params
