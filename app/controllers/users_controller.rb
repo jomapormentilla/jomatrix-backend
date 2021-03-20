@@ -23,6 +23,16 @@ class UsersController < ApplicationController
         end
     end
 
+    def update
+        user = User.find_by(id: params[:id])
+
+        if user.update(user_params)
+            render json: UserSerializer.new(user).to_serialized_json
+        else
+            render json: { error: 'Unable to update the user.' }
+        end
+    end
+
     private
 
     def user_params
@@ -30,7 +40,11 @@ class UsersController < ApplicationController
             :first_name,
             :last_name,
             :email,
-            :password
+            :password,
+            :username,
+            :website,
+            :bio,
+            :gender
         )
     end
 end
