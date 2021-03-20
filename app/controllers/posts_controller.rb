@@ -1,6 +1,12 @@
 class PostsController < ApplicationController
     def index
-        posts = Post.all.order(id: :desc)
+        if params[:page]
+            page = params[:page]
+        else
+            page = 0
+        end
+
+        posts = Post.all.order(id: :desc).with_attached_image.includes(:comments, :likes).limit(10).offset(10*page.to_i)
         render json: PostSerializer.new(posts).to_serialized_json
     end
 
@@ -20,7 +26,8 @@ class PostsController < ApplicationController
     def post_params
         params.require(:post).permit(
             :title,
-            :content
+            :content,
+            :location
         )
     end
 end

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
     skip_before_action :authorized, only: [:create]
 
     def index
-        users = User.all
+        users = User.all.includes(:friends, :posts, :likes, :comments)
         render json: UserSerializer.new(users).to_serialized_json
     end
 
