@@ -4,8 +4,13 @@ class LikesController < ApplicationController
         like.user_id = current_user.id
 
         if like.save
-            post = Post.find_by(id: like.likeable_id)
-            render json: PostSerializer.new(post).to_serialized_json
+            if like_params[:likeable_type] == "Post"
+                post = Post.find_by(id: like.likeable_id)
+                render json: PostSerializer.new(post).to_serialized_json
+            elsif like_params[:likeable_type] == "Comment"
+                comment = Comment.find_by(id: like.likeable_id)
+                render json: CommentSerializer.new(comment).to_serialized_json
+            end
         else
             render json: { error: 'Something went wrong.' }
         end
@@ -15,10 +20,16 @@ class LikesController < ApplicationController
         like = Like.all.find_by(id: params[:id].to_i)
 
         if !!like
-            post = Post.find_by(id: like.likeable_id)
-            like.delete
-
-            render json: PostSerializer.new(post).to_serialized_json
+            if like.likeable_type == "Post"
+                post = Post.find_by(id: like.likeable_id)
+                like.delete
+                render json: PostSerializer.new(post).to_serialized_json
+            elsif like.likeable_type == "Comment"
+                comment = Comment.find_by(id: like.likeable_id)
+                like.delete
+                render json: CommentSerializer.new(comment).to_serialized_json
+            end
+            
         else
             render json: { error: 'Something went wrong!' }
         end 

@@ -6,7 +6,7 @@ class CommentSerializer
     def to_serialized_json
         @comment.to_json(
             :include => [
-                :likes => {only: [:id]},
+                :likes,
                 :comments => {only: [:id]}
             ],
             :except => [
