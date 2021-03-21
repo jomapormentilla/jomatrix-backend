@@ -33,6 +33,18 @@ class UsersController < ApplicationController
         end
     end
 
+    def update_password
+        user = User.find_by(id: params[:id])
+
+        byebug
+        if !!params[:old_password] && user.authenticate(params[:old_password])
+            user.update(user_params)
+            render json: UserSerializer.new(user).to_serialized_json
+        else
+            render json: { error: 'Unable to update password.' }
+        end
+    end
+
     private
 
     def user_params
@@ -44,7 +56,9 @@ class UsersController < ApplicationController
             :username,
             :website,
             :bio,
-            :gender
+            :gender,
+            :image,
+            :old_password
         )
     end
 end
