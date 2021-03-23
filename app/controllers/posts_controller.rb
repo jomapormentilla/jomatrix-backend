@@ -2,11 +2,11 @@ class PostsController < ApplicationController
     def index
         if params[:page]
             page = params[:page]
+            posts = Post.all.order(id: :desc).with_attached_image.includes(:comments, :likes).limit(10).offset(10*page.to_i)
         else
-            page = 0
+            posts = Post.all.order(id: :desc).with_attached_image.includes(:comments, :likes)
         end
 
-        posts = Post.all.order(id: :desc).with_attached_image.includes(:comments, :likes).limit(10).offset(10*page.to_i)
         render json: PostSerializer.new(posts).to_serialized_json
     end
 
@@ -18,6 +18,17 @@ class PostsController < ApplicationController
             render json: PostSerializer.new(post).to_serialized_json
         else
             render json: { error: 'Unable to save post.' }
+        end
+    end
+
+    def destroy
+        post = Post.find_by(id: params[:id])
+
+        if !!post
+            post.delete
+            render json: PostSerializer.new(post).to_serialized_json
+        else
+            render json: { error: 'Unable to delete post.' }
         end
     end
 

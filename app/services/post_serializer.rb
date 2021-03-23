@@ -7,7 +7,7 @@ class PostSerializer
         @post.to_json(
             :include => [
                 :comments,
-                :likes,
+                :likes
             ],
             :except => [
                 
