@@ -35,7 +35,7 @@ def test_user
 end
 
 def create_posts
-    10.times do
+    2.times do
         data = {
             title: Faker::Book.title,
             content: "https://picsum.photos/450",
