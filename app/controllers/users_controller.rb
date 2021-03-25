@@ -36,7 +36,6 @@ class UsersController < ApplicationController
     def update_password
         user = User.find_by(id: params[:id])
 
-        byebug
         if !!params[:old_password] && user.authenticate(params[:old_password])
             user.update(user_params)
             render json: UserSerializer.new(user).to_serialized_json
