@@ -21,13 +21,13 @@ end
 
 def test_user
     data = {
-        first_name: "Steve",
-        last_name: "Rogers",
-        username: "captainamerica",
-        email: "steverogers@gmail.com",
+        first_name: "Tony",
+        last_name: "Stark",
+        username: "ironman",
+        email: "tonystark@gmail.com",
         password: ENV['ADMIN_PASSWORD'],
         website: "https://github.com/jomapormentilla",
-        bio: "The First Avenger",
+        bio: "Billionaire | Philanthropist",
         gender: "Male"
     }
     
